@@ -6,6 +6,7 @@ from app.routers.expense import router as expense_router
 from app.routers.bill import router as bill_router
 from app.routers.reminder import router as reminder_router
 from app.routers.dashboard import router as dashboard_router
+from app.routers.auth import router as auth_router
 
 # Auto-create database tables (SQLAlchemy models)
 Base.metadata.create_all(bind=engine)
@@ -27,6 +28,7 @@ app.include_router(expense_router, prefix="/api")
 app.include_router(bill_router, prefix="/api")
 app.include_router(reminder_router, prefix="/api")
 app.include_router(dashboard_router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
 
 @app.get("/")
 def read_root():
