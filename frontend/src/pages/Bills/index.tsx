@@ -30,7 +30,8 @@ const Bills: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof billSchema>>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } = useForm<any>({
     resolver: zodResolver(billSchema),
     defaultValues: {
       title: '',

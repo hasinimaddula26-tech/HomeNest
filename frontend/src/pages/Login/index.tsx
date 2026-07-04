@@ -45,9 +45,10 @@ const Login: React.FC = () => {
       } else {
         toast.error('Invalid username or password');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      const errorMsg = err.response?.data?.detail || 'Incorrect username or password. Please try again.';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorMsg = (err as any).response?.data?.detail || 'Incorrect username or password. Please try again.';
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);

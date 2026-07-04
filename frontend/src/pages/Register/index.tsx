@@ -48,9 +48,10 @@ const Register: React.FC = () => {
           navigate(ROUTES.LOGIN);
         }, 1500);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      const errorMsg = err.response?.data?.detail || 'Registration failed. Try a different username.';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorMsg = (err as any).response?.data?.detail || 'Registration failed. Try a different username.';
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);

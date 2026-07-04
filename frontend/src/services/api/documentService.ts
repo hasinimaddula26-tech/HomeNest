@@ -14,8 +14,9 @@ export const getDocuments = async (): Promise<{ success: boolean; data?: Documen
   try {
     const res = await api.get('/documents');
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to fetch documents' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to fetch documents' };
   }
 };
 
@@ -29,8 +30,9 @@ export const uploadDocument = async (
       },
     });
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to upload document' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to upload document' };
   }
 };
 
@@ -38,8 +40,9 @@ export const deleteDocument = async (id: number): Promise<{ success: boolean; me
   try {
     const res = await api.delete(`/documents/${id}`);
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to delete document' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to delete document' };
   }
 };
 

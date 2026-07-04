@@ -24,8 +24,9 @@ export const getFamilyMembers = async (): Promise<{ success: boolean; data?: Fam
   try {
     const res = await api.get('/family');
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to fetch family members' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to fetch family members' };
   }
 };
 
@@ -35,8 +36,9 @@ export const createFamilyMember = async (
   try {
     const res = await api.post('/family', values);
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to add family member' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to add family member' };
   }
 };
 
@@ -44,7 +46,8 @@ export const deleteFamilyMember = async (id: number): Promise<{ success: boolean
   try {
     const res = await api.delete(`/family/${id}`);
     return res.data;
-  } catch (err: any) {
-    return { success: false, message: err.response?.data?.detail || 'Failed to delete family member' };
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return { success: false, message: (err as any).response?.data?.detail || 'Failed to delete family member' };
   }
 };

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useState } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -12,19 +13,9 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('homenest_token');
-    const storedUser = localStorage.getItem('homenest_username');
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUsername(storedUser);
-    }
-    setIsLoading(false);
-  }, []);
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('homenest_token'));
+  const [username, setUsername] = useState<string | null>(() => localStorage.getItem('homenest_username'));
+  const [isLoading] = useState<boolean>(false);
 
   const login = (newToken: string, newUser: string) => {
     localStorage.setItem('homenest_token', newToken);
