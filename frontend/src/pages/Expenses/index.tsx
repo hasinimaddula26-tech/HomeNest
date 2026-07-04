@@ -67,7 +67,10 @@ const Expenses: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAddExpense = async (values: ExpenseFormValues) => {
