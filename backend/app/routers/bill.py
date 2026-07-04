@@ -1,0 +1,41 @@
+from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+from typing import Any
+from app.core.database import get_db
+from app.schemas.bill import BillCreate, BillUpdate
+from app.services import bill as bill_service
+
+router = APIRouter(prefix="/bills", tags=["Bills"])
+
+@router.get("")
+def read_bills(db: Session = Depends(get_db)) -> Any:
+    items = bill_service.get_all_bills(db)
+    return {"success": True, "data": items}
+
+@router.post("")
+def create_bill_item(bill: BillCreate, db: Session = Depends(get_db)) -> Any:
+    new_item = bill_service.create_bill(db, bill)
+    return {"success": True, "data": new_item}
+
+@router.put("/{bill_id}")
+def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depends(get_db)) -> Any:
+    db_bill = bill_service.get_bill_by_id(db, bill_id)
+    if not db_bill:
+        return JSONResponse(
+            status_code=404,
+            content={"success": False, "message": "Bill not found"}
+        )
+    updated_item = bill_service.update_bill(db, db_bill, bill_update)
+    return {"success": True, "data": updated_item}
+
+@router.delete("/{bill_id}")
+def delete_bill_item(bill_id: int, db: Session = Depends(get_db)) -> Any:
+    db_bill = bill_service.get_bill_by_id(db, bill_id)
+    if not db_bill:
+        return JSONResponse(
+            status_code=404,
+            content={"success": False, "message": "Bill not found"}
+        )
+    bill_service.delete_bill(db, db_bill)
+    return {"success": True, "message": "Bill deleted successfully"}
