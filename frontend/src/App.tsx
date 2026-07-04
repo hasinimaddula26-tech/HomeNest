@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Groceries from './pages/Groceries'
+import Expenses from './pages/Expenses'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path={ROUTES.REGISTER} element={<Register />} />
         <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
         <Route path={ROUTES.GROCERIES} element={<Groceries />} />
+        <Route path={ROUTES.EXPENSES} element={<Expenses />} />
       </Routes>
     </BrowserRouter>
   )
