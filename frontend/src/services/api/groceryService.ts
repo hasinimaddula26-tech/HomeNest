@@ -1,6 +1,6 @@
 import { api } from '../../lib/axios';
-import { GroceryFormValues } from '../../components/grocery/GroceryForm';
-import { GroceryItem } from '../../components/grocery/GroceryCard';
+import { type GroceryFormValues } from '../../components/grocery/GroceryForm';
+import { type GroceryItem } from '../../components/grocery/GroceryCard';
 
 interface APIResponse<T> {
   success: boolean;

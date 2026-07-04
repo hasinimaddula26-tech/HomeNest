@@ -1,5 +1,5 @@
 import React from 'react';
-import GroceryCard, { GroceryItem } from './GroceryCard';
+import GroceryCard, { type GroceryItem } from './GroceryCard';
 import EmptyState from './EmptyState';
 
 interface GroceryListProps {

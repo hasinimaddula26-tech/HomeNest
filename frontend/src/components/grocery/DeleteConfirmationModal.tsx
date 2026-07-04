@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
-import { GroceryItem } from './GroceryCard';
+import { type GroceryItem } from './GroceryCard';
 
 interface DeleteConfirmationModalProps {
   item: GroceryItem | null;

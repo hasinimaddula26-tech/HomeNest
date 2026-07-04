@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
-import GroceryForm, { GroceryFormValues } from '../../components/grocery/GroceryForm';
+import GroceryForm, { type GroceryFormValues } from '../../components/grocery/GroceryForm';
 import GroceryList from '../../components/grocery/GroceryList';
 import CategoryFilter from '../../components/grocery/CategoryFilter';
 import DeleteConfirmationModal from '../../components/grocery/DeleteConfirmationModal';
-import { GroceryItem } from '../../components/grocery/GroceryCard';
+import { type GroceryItem } from '../../components/grocery/GroceryCard';
 import * as groceryService from '../../services/api/groceryService';
 
 const Groceries: React.FC = () => {
@@ -27,7 +27,7 @@ const Groceries: React.FC = () => {
       } else {
         setError(res.message || 'Failed to fetch grocery items');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       setError('Connection to backend failed. Please make sure the backend is running.');
     } finally {
@@ -36,7 +36,10 @@ const Groceries: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchItems();
+    const timer = setTimeout(() => {
+      fetchItems();
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAddItem = async (values: GroceryFormValues) => {

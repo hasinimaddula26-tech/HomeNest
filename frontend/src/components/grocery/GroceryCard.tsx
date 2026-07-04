@@ -1,6 +1,5 @@
 import React from 'react';
 import { FiCheckSquare, FiSquare, FiTrash2 } from 'react-icons/fi';
-import { GroceryCategoryType } from '../../constants/grocery';
 
 export interface GroceryItem {
   id: number;
