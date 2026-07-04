@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconType } from 'react-icons';
+import { type IconType } from 'react-icons';
 import { FiShoppingCart, FiDollarSign, FiFileText, FiFolder, FiClock, FiUsers } from 'react-icons/fi';
 
 interface Feature {
