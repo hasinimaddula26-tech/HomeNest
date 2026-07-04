@@ -5,7 +5,7 @@ import Footer from '../../components/layout/Footer';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FiTrash2, FiPhone, FiAlertCircle, FiPlus, FiCalendar, FiUser } from 'react-icons/fi';
+import { FiTrash2, FiPhone, FiAlertCircle, FiPlus, FiCalendar } from 'react-icons/fi';
 import * as familyService from '../../services/api/familyService';
 import { type FamilyMemberItem, type FamilyMemberFormValues } from '../../services/api/familyService';
 

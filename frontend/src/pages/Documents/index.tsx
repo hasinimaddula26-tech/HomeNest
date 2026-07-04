@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
-import { FiTrash2, FiDownload, FiEye, FiSearch, FiUploadCloud, FiFileText, FiFolder, FiImage, FiAlertCircle, FiX } from 'react-icons/fi';
+import { FiTrash2, FiDownload, FiEye, FiSearch, FiUploadCloud, FiFileText, FiImage, FiAlertCircle, FiX } from 'react-icons/fi';
 import * as documentService from '../../services/api/documentService';
 import { type DocumentItem } from '../../services/api/documentService';
 import { api } from '../../lib/axios';
