@@ -52,3 +52,42 @@ CREATE TABLE IF NOT EXISTS activities (
     description VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create family_members table
+CREATE TABLE IF NOT EXISTS family_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    relation VARCHAR(50) NOT NULL,
+    blood_group VARCHAR(5) NOT NULL,
+    birthday DATE NOT NULL,
+    emergency_contact VARCHAR(20) NOT NULL,
+    photo_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create documents table
+CREATE TABLE IF NOT EXISTS documents (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    category VARCHAR(50) DEFAULT 'Others',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Add user_id column to existing tables for data isolation
+ALTER TABLE groceries ADD COLUMN IF NOT EXISTS user_id INT NULL;
+ALTER TABLE expenses ADD COLUMN IF NOT EXISTS user_id INT NULL;
+ALTER TABLE bills ADD COLUMN IF NOT EXISTS user_id INT NULL;
+ALTER TABLE reminders ADD COLUMN IF NOT EXISTS user_id INT NULL;
+ALTER TABLE activities ADD COLUMN IF NOT EXISTS user_id INT NULL;
