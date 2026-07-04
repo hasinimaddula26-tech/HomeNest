@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.core.database import engine, Base
+from app.routers.grocery import router as grocery_router
+
+# Auto-create database tables (SQLAlchemy models)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="HomeNest API", version="0.1.0")
 
@@ -11,6 +16,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register routers
+app.include_router(grocery_router, prefix="/api")
 
 @app.get("/")
 def read_root():
