@@ -6,6 +6,8 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Groceries from './pages/Groceries'
 import Expenses from './pages/Expenses'
+import Bills from './pages/Bills'
+import Reminders from './pages/Reminders'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
         <Route path={ROUTES.GROCERIES} element={<Groceries />} />
         <Route path={ROUTES.EXPENSES} element={<Expenses />} />
+        <Route path={ROUTES.BILLS} element={<Bills />} />
+        <Route path={ROUTES.REMINDERS} element={<Reminders />} />
       </Routes>
     </BrowserRouter>
   )

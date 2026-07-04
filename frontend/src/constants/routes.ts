@@ -5,4 +5,6 @@ export const ROUTES = {
   DASHBOARD: "/dashboard",
   EXPENSES: "/expenses",
   GROCERIES: "/groceries",
+  BILLS: "/bills",
+  REMINDERS: "/reminders",
 } as const;
