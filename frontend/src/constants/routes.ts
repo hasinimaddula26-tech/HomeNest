@@ -8,4 +8,5 @@ export const ROUTES = {
   BILLS: "/bills",
   REMINDERS: "/reminders",
   FAMILY: "/family",
+  DOCUMENTS: "/documents",
 } as const;
