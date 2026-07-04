@@ -8,6 +8,7 @@ from app.routers.reminder import router as reminder_router
 from app.routers.dashboard import router as dashboard_router
 from app.routers.auth import router as auth_router
 from app.routers.family import router as family_router
+from app.routers.document import router as document_router
 
 # Auto-create database tables (SQLAlchemy models)
 Base.metadata.create_all(bind=engine)
@@ -31,6 +32,7 @@ app.include_router(reminder_router, prefix="/api")
 app.include_router(dashboard_router, prefix="/api")
 app.include_router(auth_router, prefix="/api")
 app.include_router(family_router, prefix="/api")
+app.include_router(document_router, prefix="/api")
 
 @app.get("/")
 def read_root():
