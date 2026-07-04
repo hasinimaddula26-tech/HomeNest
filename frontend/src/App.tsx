@@ -8,6 +8,7 @@ import Groceries from './pages/Groceries'
 import Expenses from './pages/Expenses'
 import Bills from './pages/Bills'
 import Reminders from './pages/Reminders'
+import Family from './pages/Family'
 
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './components/common/PrivateRoute'
@@ -26,6 +27,7 @@ function App() {
           <Route path={ROUTES.EXPENSES} element={<PrivateRoute><Expenses /></PrivateRoute>} />
           <Route path={ROUTES.BILLS} element={<PrivateRoute><Bills /></PrivateRoute>} />
           <Route path={ROUTES.REMINDERS} element={<PrivateRoute><Reminders /></PrivateRoute>} />
+          <Route path={ROUTES.FAMILY} element={<PrivateRoute><Family /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

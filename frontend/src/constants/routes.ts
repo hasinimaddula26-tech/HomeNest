@@ -7,4 +7,5 @@ export const ROUTES = {
   GROCERIES: "/groceries",
   BILLS: "/bills",
   REMINDERS: "/reminders",
+  FAMILY: "/family",
 } as const;
