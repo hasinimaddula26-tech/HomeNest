@@ -53,9 +53,15 @@ const Navbar: React.FC = () => {
 
   // Fetch notifications periodically or on mount
   useEffect(() => {
-    fetchNotifs();
+    const timer = setTimeout(() => {
+      fetchNotifs();
+    }, 0);
     const interval = setInterval(fetchNotifs, 15000); // 15s polling
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   // Click outside listener for notification panel
@@ -78,11 +84,6 @@ const Navbar: React.FC = () => {
     localStorage.setItem('homenest_read_notifications', JSON.stringify(allIds));
   };
 
-  const getPriorityColor = (p: string) => {
-    if (p === 'high') return 'text-red-500 bg-red-100';
-    if (p === 'medium') return 'text-amber-500 bg-amber-100';
-    return 'text-blue-500 bg-blue-100';
-  };
 
   const getPriorityDot = (p: string) => {
     if (p === 'high') return '🔴';

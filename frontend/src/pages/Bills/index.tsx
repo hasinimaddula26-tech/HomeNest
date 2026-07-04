@@ -30,7 +30,7 @@ const Bills: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<z.infer<typeof billSchema>>({
     resolver: zodResolver(billSchema),
     defaultValues: {
       title: '',

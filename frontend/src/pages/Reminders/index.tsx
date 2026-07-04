@@ -39,7 +39,7 @@ const Reminders: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<z.infer<typeof reminderSchema>>({
     resolver: zodResolver(reminderSchema),
     defaultValues: {
       title: '',
