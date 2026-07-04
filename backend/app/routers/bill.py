@@ -6,22 +6,25 @@ from app.core.database import get_db
 from app.schemas.bill import BillCreate, BillUpdate
 from app.services import bill as bill_service
 
+from app.core.security import get_current_user
+from app.models.user import User
+
 router = APIRouter(prefix="/bills", tags=["Bills"])
 
 @router.get("")
-def read_bills(db: Session = Depends(get_db)) -> Any:
-    items = bill_service.get_all_bills(db)
+def read_bills(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
+    items = bill_service.get_all_bills(db, current_user.id)
     return {"success": True, "data": items}
 
 @router.post("")
-def create_bill_item(bill: BillCreate, db: Session = Depends(get_db)) -> Any:
-    new_item = bill_service.create_bill(db, bill)
+def create_bill_item(bill: BillCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
+    new_item = bill_service.create_bill(db, current_user.id, bill)
     return {"success": True, "data": new_item}
 
 @router.put("/{bill_id}")
-def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depends(get_db)) -> Any:
+def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     db_bill = bill_service.get_bill_by_id(db, bill_id)
-    if not db_bill:
+    if not db_bill or db_bill.user_id != current_user.id:
         return JSONResponse(
             status_code=404,
             content={"success": False, "message": "Bill not found"}
@@ -30,9 +33,9 @@ def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depend
     return {"success": True, "data": updated_item}
 
 @router.delete("/{bill_id}")
-def delete_bill_item(bill_id: int, db: Session = Depends(get_db)) -> Any:
+def delete_bill_item(bill_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     db_bill = bill_service.get_bill_by_id(db, bill_id)
-    if not db_bill:
+    if not db_bill or db_bill.user_id != current_user.id:
         return JSONResponse(
             status_code=404,
             content={"success": False, "message": "Bill not found"}

@@ -1,10 +1,11 @@
-from sqlalchemy import Column, Integer, String, Text, Date, DateTime, Boolean, func
+from sqlalchemy import Column, Integer, String, Text, Date, DateTime, Boolean, ForeignKey, func
 from ..core.database import Base
 
 class Reminder(Base):
     __tablename__ = "reminders"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
     title = Column(String(100), nullable=False)
     description = Column(Text, nullable=True)
     type = Column(String(30), default="General", nullable=False)

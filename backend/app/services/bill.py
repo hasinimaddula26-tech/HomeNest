@@ -4,14 +4,15 @@ from app.models.bill import Bill
 from app.schemas.bill import BillCreate, BillUpdate
 from app.services.activity import log_activity
 
-def get_all_bills(db: Session) -> List[Bill]:
-    return db.query(Bill).order_by(Bill.due_date.asc(), Bill.created_at.desc()).all()
+def get_all_bills(db: Session, user_id: int) -> List[Bill]:
+    return db.query(Bill).filter(Bill.user_id == user_id).order_by(Bill.due_date.asc(), Bill.created_at.desc()).all()
 
 def get_bill_by_id(db: Session, bill_id: int) -> Optional[Bill]:
     return db.query(Bill).filter(Bill.id == bill_id).first()
 
-def create_bill(db: Session, bill: BillCreate) -> Bill:
+def create_bill(db: Session, user_id: int, bill: BillCreate) -> Bill:
     db_bill = Bill(
+        user_id=user_id,
         title=bill.title,
         amount=bill.amount,
         category=bill.category.value if hasattr(bill.category, 'value') else bill.category,
@@ -22,7 +23,7 @@ def create_bill(db: Session, bill: BillCreate) -> Bill:
     db.commit()
     db.refresh(db_bill)
     
-    log_activity(db, f"Bill '{db_bill.title}' of ₹{float(db_bill.amount):,.2f} added")
+    log_activity(db, message=f"Added bill '{db_bill.title}' (₹{float(db_bill.amount):,.2f})", activity_type="Bill", user_id=user_id)
     return db_bill
 
 def update_bill(db: Session, db_bill: Bill, bill_update: BillUpdate) -> Bill:
@@ -40,15 +41,16 @@ def update_bill(db: Session, db_bill: Bill, bill_update: BillUpdate) -> Bill:
     
     # Log special activity on pay status change
     if old_is_paid != db_bill.is_paid:
-        action = "marked as Paid" if db_bill.is_paid else "marked as Unpaid"
-        log_activity(db, f"Bill '{db_bill.title}' {action}")
+        action = "paid" if db_bill.is_paid else "marked as unpaid"
+        log_activity(db, message=f"Bill '{db_bill.title}' {action}", activity_type="Bill", user_id=db_bill.user_id)
     else:
-        log_activity(db, f"Bill '{db_bill.title}' updated")
+        log_activity(db, message=f"Updated bill '{db_bill.title}' details", activity_type="Bill", user_id=db_bill.user_id)
         
     return db_bill
 
 def delete_bill(db: Session, db_bill: Bill) -> None:
     title = db_bill.title
+    user_id = db_bill.user_id
     db.delete(db_bill)
     db.commit()
-    log_activity(db, f"Bill '{title}' deleted")
+    log_activity(db, message=f"Deleted bill '{title}'", activity_type="Bill", user_id=user_id)
