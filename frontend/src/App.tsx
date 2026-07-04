@@ -9,20 +9,26 @@ import Expenses from './pages/Expenses'
 import Bills from './pages/Bills'
 import Reminders from './pages/Reminders'
 
+import { AuthProvider } from './context/AuthContext'
+import PrivateRoute from './components/common/PrivateRoute'
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={ROUTES.HOME} element={<Landing />} />
-        <Route path={ROUTES.LOGIN} element={<Login />} />
-        <Route path={ROUTES.REGISTER} element={<Register />} />
-        <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-        <Route path={ROUTES.GROCERIES} element={<Groceries />} />
-        <Route path={ROUTES.EXPENSES} element={<Expenses />} />
-        <Route path={ROUTES.BILLS} element={<Bills />} />
-        <Route path={ROUTES.REMINDERS} element={<Reminders />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={ROUTES.HOME} element={<Landing />} />
+          <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={ROUTES.REGISTER} element={<Register />} />
+          
+          <Route path={ROUTES.DASHBOARD} element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path={ROUTES.GROCERIES} element={<PrivateRoute><Groceries /></PrivateRoute>} />
+          <Route path={ROUTES.EXPENSES} element={<PrivateRoute><Expenses /></PrivateRoute>} />
+          <Route path={ROUTES.BILLS} element={<PrivateRoute><Bills /></PrivateRoute>} />
+          <Route path={ROUTES.REMINDERS} element={<PrivateRoute><Reminders /></PrivateRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
