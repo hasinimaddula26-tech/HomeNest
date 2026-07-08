@@ -17,7 +17,7 @@ const stats: StatItem[] = [
 const StatsSection: React.FC = () => {
   return (
     <section className="py-12 bg-white border-y border-slate-200/60">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="w-full max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-2">

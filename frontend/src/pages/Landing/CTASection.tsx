@@ -8,7 +8,7 @@ const CTASection: React.FC = () => {
       {/* Decorative Blur Backgrounds */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl -z-10 pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-6 text-center">
+      <div className="w-full max-w-4xl mx-auto px-6 text-center">
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-14 shadow-2xl relative overflow-hidden">
           {/* Subtle grid pattern or shapes */}
           <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-30" />

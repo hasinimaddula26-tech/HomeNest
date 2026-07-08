@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-slate-900 border-t border-slate-800 py-12 md:py-16 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="w-full max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Branding & Logo */}
         <div className="flex items-center gap-2 text-white font-bold text-lg tracking-tight">
           <span className="text-xl">🏠</span>
