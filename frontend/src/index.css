@@ -146,6 +146,29 @@ body {
   }
 }
 
+/* Space-y- physical property fallbacks for Tailwind v4 logical space rules */
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.25rem !important;
+}
+.space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.375rem !important;
+}
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.5rem !important;
+}
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem !important;
+}
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem !important;
+}
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1.5rem !important;
+}
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 2rem !important;
+}
+
 /* Custom scroll behavior and transitions */
 html {
   scroll-behavior: smooth;
