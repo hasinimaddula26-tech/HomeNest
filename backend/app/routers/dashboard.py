@@ -7,6 +7,8 @@ from app.services import activity as activity_service
 
 from app.core.security import get_current_user
 from app.models.user import User
+from app.schemas.reminder import ReminderResponse
+from app.schemas.expense import ExpenseResponse
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
@@ -23,12 +25,14 @@ def get_upcoming_bills(db: Session = Depends(get_db), current_user: User = Depen
 @router.get("/today-reminders")
 def get_today_reminders(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     data = dashboard_service.get_today_reminders(db, current_user.id)
-    return {"success": True, "data": data}
+    serialized = [ReminderResponse.model_validate(r).model_dump(mode="json") for r in data]
+    return {"success": True, "data": serialized}
 
 @router.get("/recent-expenses")
 def get_recent_expenses(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     data = dashboard_service.get_recent_expenses(db, current_user.id)
-    return {"success": True, "data": data}
+    serialized = [ExpenseResponse.model_validate(e).model_dump(mode="json") for e in data]
+    return {"success": True, "data": serialized}
 
 @router.get("/notifications")
 def get_notifications(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
