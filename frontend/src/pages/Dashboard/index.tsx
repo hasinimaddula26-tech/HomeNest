@@ -115,8 +115,8 @@ const Dashboard: React.FC = () => {
       <Toaster position="top-right" />
       <Navbar />
 
-      <main className="flex-grow pt-28 pb-16 px-6">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <main className="w-full flex-grow pt-28 pb-16 px-6">
+        <div className="w-full max-w-7xl mx-auto space-y-8">
           {/* Welcome Header */}
           <div className="border-b border-slate-200/60 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
