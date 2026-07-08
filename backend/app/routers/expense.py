@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from typing import Any
 from app.core.database import get_db
-from app.schemas.expense import GroceryCategory  # wait, import the correct schemas
 from app.schemas.expense import ExpenseCreate, ExpenseUpdate
 from app.services import expense as expense_service
 
