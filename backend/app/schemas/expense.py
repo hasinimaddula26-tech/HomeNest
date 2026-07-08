@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 from typing import Optional
-from datetime import date, datetime
+import datetime
 from decimal import Decimal
 from enum import Enum
 
@@ -23,7 +23,7 @@ class ExpenseBase(BaseModel):
     title: str = Field(..., min_length=2, max_length=100, description="Title/description of the expense")
     amount: Decimal = Field(..., ge=0.01, description="Amount spent")
     category: ExpenseCategory = Field(default=ExpenseCategory.OTHERS, description="Category of the expense")
-    date: date = Field(..., description="Date of the expenditure")
+    date: datetime.date = Field(..., description="Date of the expenditure")
     notes: Optional[str] = Field(None, description="Optional notes")
 
     @field_validator('title')
@@ -34,7 +34,7 @@ class ExpenseBase(BaseModel):
 
     @field_validator('date')
     def date_cannot_be_in_future(cls, v):
-        if v > date.today():
+        if v > datetime.date.today():
             raise ValueError('Date cannot be in the future')
         return v
 
@@ -45,7 +45,7 @@ class ExpenseUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=2, max_length=100)
     amount: Optional[Decimal] = Field(None, ge=0.01)
     category: Optional[ExpenseCategory] = None
-    date: Optional[date] = None
+    date: Optional[datetime.date] = None
     notes: Optional[str] = None
 
     @field_validator('title')
@@ -56,13 +56,13 @@ class ExpenseUpdate(BaseModel):
 
     @field_validator('date')
     def date_cannot_be_in_future(cls, v):
-        if v is not None and v > date.today():
+        if v is not None and v > datetime.date.today():
             raise ValueError('Date cannot be in the future')
         return v
 
 class ExpenseResponse(ExpenseBase):
     id: int
-    created_at: datetime
+    created_at: datetime.datetime
 
     model_config = ConfigDict(
         from_attributes=True,
