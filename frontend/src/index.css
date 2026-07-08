@@ -89,17 +89,39 @@ body {
   padding-bottom: 7rem !important;
 }
 
+.pt-28 {
+  padding-top: 7rem !important;
+}
 .pt-32 {
   padding-top: 8rem !important;
 }
 .pt-40 {
   padding-top: 10rem !important;
 }
+.pb-16 {
+  padding-bottom: 4rem !important;
+}
 .pb-20 {
   padding-bottom: 5rem !important;
 }
 .pb-28 {
   padding-bottom: 7rem !important;
+}
+.pb-6 {
+  padding-bottom: 1.5rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+.mt-6 {
+  margin-top: 1.5rem !important;
+}
+.mt-8 {
+  margin-top: 2rem !important;
 }
 
 .mb-4 {
