@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import Any
 import os
@@ -29,12 +30,12 @@ async def upload_document(
         file_content=content,
         category=category
     )
-    return {"success": True, "data": doc}
+    return {"success": True, "data": jsonable_encoder(doc)}
 
 @router.get("")
 def read_documents(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = document_service.get_user_documents(db, current_user.id)
-    return {"success": True, "data": items}
+    return {"success": True, "data": jsonable_encoder(items)}
 
 @router.get("/{doc_id}/file")
 def get_file(doc_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:

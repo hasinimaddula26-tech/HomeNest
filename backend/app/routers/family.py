@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import Any
 from app.core.database import get_db
@@ -13,12 +14,12 @@ router = APIRouter(prefix="/family", tags=["Family Directory"])
 @router.get("")
 def read_family_members(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = family_service.get_family_members(db, current_user.id)
-    return {"success": True, "data": items}
+    return {"success": True, "data": jsonable_encoder(items)}
 
 @router.post("")
 def create_member(member: FamilyMemberCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     new_item = family_service.create_family_member(db, current_user.id, member)
-    return {"success": True, "data": new_item}
+    return {"success": True, "data": jsonable_encoder(new_item)}
 
 @router.delete("/{member_id}")
 def delete_member(member_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:

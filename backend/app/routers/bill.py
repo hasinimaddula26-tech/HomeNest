@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import Any
 from app.core.database import get_db
@@ -14,12 +15,12 @@ router = APIRouter(prefix="/bills", tags=["Bills"])
 @router.get("")
 def read_bills(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = bill_service.get_all_bills(db, current_user.id)
-    return {"success": True, "data": items}
+    return {"success": True, "data": jsonable_encoder(items)}
 
 @router.post("")
 def create_bill_item(bill: BillCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     new_item = bill_service.create_bill(db, current_user.id, bill)
-    return {"success": True, "data": new_item}
+    return {"success": True, "data": jsonable_encoder(new_item)}
 
 @router.put("/{bill_id}")
 def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
@@ -30,7 +31,7 @@ def update_bill_item(bill_id: int, bill_update: BillUpdate, db: Session = Depend
             content={"success": False, "message": "Bill not found"}
         )
     updated_item = bill_service.update_bill(db, db_bill, bill_update)
-    return {"success": True, "data": updated_item}
+    return {"success": True, "data": jsonable_encoder(updated_item)}
 
 @router.delete("/{bill_id}")
 def delete_bill_item(bill_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
