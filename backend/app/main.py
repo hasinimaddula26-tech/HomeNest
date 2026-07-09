@@ -11,7 +11,11 @@ from app.routers.family import router as family_router
 from app.routers.document import router as document_router
 
 # Auto-create database tables (SQLAlchemy models)
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    import sys
+    print(f"Warning: Database connection failed during startup table creation: {e}", file=sys.stderr)
 
 app = FastAPI(title="HomeNest API", version="0.1.0")
 
