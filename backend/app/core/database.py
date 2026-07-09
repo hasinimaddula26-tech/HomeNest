@@ -3,9 +3,14 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from .config import settings
 
 # Create engine
+connect_args = {}
+if "aivencloud.com" in settings.DATABASE_URL:
+    connect_args["ssl"] = {}
+
 engine = create_engine(
     settings.DATABASE_URL,
     pool_pre_ping=True,
+    connect_args=connect_args,
 )
 
 # Create session maker
