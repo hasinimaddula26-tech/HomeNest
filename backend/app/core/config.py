@@ -11,7 +11,17 @@ class Settings(BaseSettings):
     @classmethod
     def validate_database_url(cls, v: str) -> str:
         if v.startswith("mysql://"):
-            return v.replace("mysql://", "mysql+pymysql://", 1)
+            v = v.replace("mysql://", "mysql+pymysql://", 1)
+        if "ssl-mode=" in v:
+            if "?" in v:
+                parts = v.split("?")
+                base = parts[0]
+                query_params = parts[1].split("&")
+                filtered_params = [p for p in query_params if not p.startswith("ssl-mode")]
+                if filtered_params:
+                    v = base + "?" + "&".join(filtered_params)
+                else:
+                    v = base
         return v
 
     class Config:
