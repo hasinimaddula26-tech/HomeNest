@@ -32,3 +32,5 @@ FastAPI application for managing family digital command center features.
    ```bash
    uvicorn app.main:app --reload
    ```
+
+Last Deployed: July 10, 2026
