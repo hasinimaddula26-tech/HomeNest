@@ -1,263 +1,131 @@
-# HomeNest – Project Explanation
+# 🏠 HomeNest – Full-Stack Household Management Platform
 
-Hey! Since we're doing this together, I wanted to explain the complete idea before we start coding.
+HomeNest is a production-grade, secure full-stack web application designed to help families organize everyday activities, manage finances, secure personal files, and catalog contacts from a centralized, private portal.
 
-The project is called **HomeNest**. It's basically a **Digital Home Management System**.
-
-The problem we're trying to solve is that every family has important information scattered across different places. Grocery lists are in WhatsApp, bills are in emails, documents are in Google Drive, expenses are written in notebooks, and reminders are stored in different apps. Managing all these things becomes difficult.
-
-So instead of using five or six different apps, we're building **one platform where a family can manage everything related to their home.**
+This repository contains both the **React & TypeScript** frontend client and the **FastAPI & MySQL** backend API server, fully integrated and ready to run locally or in production.
 
 ---
 
-# Imagine this situation
-
-Suppose your mom says,
-
-> "Can you check when the electricity bill is due?"
-
-You start searching:
-
-* WhatsApp
-* Gallery
-* Email
-* Google Drive
-* Notes
-
-It wastes time.
-
-Our application solves this.
-
-Everything is available in one dashboard.
+## 🔗 Live Deployments
+*   **Frontend Website:** [https://homenest-beta.vercel.app/](https://homenest-beta.vercel.app/)
+*   **Backend API Services:** [https://homenest-backend-yw8c.onrender.com/](https://homenest-backend-yw8c.onrender.com/)
+*   **Backend API Documentation:** [https://homenest-backend-yw8c.onrender.com/docs](https://homenest-backend-yw8c.onrender.com/docs)
 
 ---
 
-# Main Features
+## 🛠️ Complete Technology Stack
 
-### 1. User Authentication
-
-Every family creates an account.
-
-They can:
-
-* Register
-* Login
-* Securely access only their own data
-
----
-
-### 2. Dashboard
-
-This is the first screen after login.
-
-It gives a quick overview like:
-
-* Pending bills
-* Monthly expenses
-* Grocery items remaining
-* Upcoming reminders
-* Stored documents
-* Family members
-
-Instead of opening every module separately, users immediately know what's happening.
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Frontend UI** | React 19 + TypeScript | High-performance client-side application with type safety. |
+| **Styling** | Tailwind CSS | Modern, responsive glassmorphic interfaces. |
+| **Backend API** | FastAPI (Python) | High-performance ASGI framework with auto-generated Swagger docs. |
+| **ORM** | SQLAlchemy | Parameterized queries to map SQL tables to Python classes safely. |
+| **Database** | MySQL | Hosted on Aiven Cloud with full SSL encryption and backups. |
+| **Authentication**| JWT (JSON Web Tokens) | Stateless authorization and encrypted local token storage. |
+| **Orchestration** | Docker & Compose | Multi-container setup containing Nginx, FastAPI, and MySQL. |
 
 ---
 
-### 3. Grocery Management
+## 📂 Project Structure
 
-Users can:
-
-* Add grocery items
-* Edit them
-* Delete them
-* Mark them as purchased
-
-Example:
-* Milk
-* Rice
-* Eggs
-* Cooking Oil
-
-This is a complete CRUD module.
-
----
-
-### 4. Expense Tracker
-
-Users record expenses like:
-* Vegetables
-* Electricity
-* Shopping
-* Medical
-* Fuel
-
-The dashboard will calculate:
-* Today's Expense
-* Weekly Expense
-* Monthly Expense
-
-Later we can even show charts.
-
----
-
-### 5. Bills Module
-
-Users can save recurring bills like:
-* Electricity
-* Water
-* Internet
-* Gas
-* Mobile Recharge
-
-Each bill has:
-* Amount
-* Due Date
-* Status (Pending or Paid)
-
-This prevents missing payments.
-
----
-
-### 6. Reminder Module
-
-Users can create reminders for:
-* Medicine
-* Insurance Renewal
-* Birthdays
-* EMIs
-* Appointments
-* Important Dates
-
----
-
-### 7. Document Vault
-
-Instead of searching everywhere, users upload important documents like:
-* Aadhaar
-* PAN
-* Passport
-* Driving License
-* Property Documents
-* Electricity Bills
-
-They can download them anytime.
-
----
-
-### 8. Emergency Contacts
-
-Users can save:
-* Doctor
-* Police
-* Hospital
-* Electrician
-* Plumber
-* Nearby Contacts
-
-Everything stays organized.
-
----
-
-### 9. Family Members
-
-Store details of family members:
-* Name
-* Phone
-* Blood Group
-* Birthday
-* Email
-* Relationship
-
----
-
-# Technology Stack
-
-**Frontend**
-* React
-* TypeScript
-* Tailwind CSS
-* Vite
-
-**Backend**
-* Python FastAPI
-
-**Database**
-* MySQL
-
-**Deployment**
-* Vercel (Frontend)
-* Render (Backend)
-
----
-
-# Why we selected FastAPI
-
-Since both of us are learning full-stack development and Python is beginner-friendly, FastAPI lets us build APIs quickly.
-
-It's also fast, modern, and used in many production applications.
-
----
-
-# How the application works
-
-```
-User
-  ↓
-React Frontend
-  ↓
-REST API
-  ↓
-FastAPI Backend
-  ↓
-MySQL Database
+```text
+├── backend/            # FastAPI application source code
+│   ├── app/            # Main application directory (models, routers, services)
+│   ├── Dockerfile      # Containerization instructions for the API
+│   ├── requirements.txt# Python dependency manifest
+│   └── runtime.txt     # Locked Python version for Render (3.11.8)
+├── frontend/           # React SPA application source code
+│   ├── src/            # React components, pages, context, and configurations
+│   ├── Dockerfile      # Containerization instructions for Nginx static host
+│   └── package.json    # Frontend dependency manifest
+├── docker-compose.yml  # Orchestrates full-stack services locally
+└── runtime.txt         # Root runtime declaration for repository integrations
 ```
 
-Whenever the user clicks a button like **Add Expense**, the frontend sends a request to the backend, the backend stores the data in MySQL, and the updated information is shown back on the screen.
+---
+
+## 🚀 Setting Up and Running the Integrated App Locally
+
+You can run the entire integrated stack locally either via **native terminal commands** or with **Docker Compose**.
+
+### Method 1: Running with Docker Compose (Recommended)
+Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+1.  Navigate to the repository root.
+2.  Run the following command to build and launch all services:
+    ```bash
+    docker-compose up --build
+    ```
+3.  Once the build finishes:
+    *   Access the **Frontend Web App** at [http://localhost:80](http://localhost:80)
+    *   Access the **Backend API** at [http://localhost:8000](http://localhost:8000)
 
 ---
 
-# How we're planning to build it
+### Method 2: Running Natively
+#### Step 1: Run the Backend
+1.  Navigate to the `backend/` directory:
+    ```bash
+    cd backend
+    ```
+2.  Set up a virtual environment and install dependencies:
+    ```bash
+    python -m venv venv
+    # Windows:
+    .\venv\Scripts\activate
+    # macOS/Linux:
+    source venv/bin/activate
+    
+    pip install -r requirements.txt
+    ```
+3.  Create a `.env` file inside `backend/` containing:
+    ```env
+    DATABASE_URL=mysql+pymysql://avnadmin:YOUR_PASSWORD@YOUR_HOST:YOUR_PORT/defaultdb
+    SECRET_KEY=supersecretfamilyhomenestkey
+    ACCESS_TOKEN_EXPIRE_MINUTES=30
+    ```
+4.  Launch the Uvicorn development server:
+    ```bash
+    uvicorn app.main:app --reload
+    ```
 
-We are **not** going to build everything at once. We'll build it module by module.
-
-* **Phase 1**: Project setup, folder structure, routing, landing page
-* **Phase 2**: Login & Register
-* **Phase 3**: Dashboard
-* **Phase 4**: Grocery CRUD
-* **Phase 5**: Expense CRUD
-* **Phase 6**: Bills CRUD
-* **Phase 7**: Reminders
-* **Phase 8**: Documents
-* **Phase 9**: Backend APIs
-* **Phase 10**: Database Integration
-* **Phase 11**: Deployment
+#### Step 2: Run the Frontend
+1.  Open a new terminal and navigate to the `frontend/` directory:
+    ```bash
+    cd frontend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Create a `.env` file inside `frontend/` pointing to the local backend:
+    ```env
+    VITE_API_URL=http://localhost:8000
+    ```
+4.  Start the Vite dev server:
+    ```bash
+    npm run dev
+    ```
+5.  Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-# Division of Work
+## ⚙️ Integration Challenges & Technical Solutions
 
-### My Part (Lead Developer & Backend Architect)
-* Project architecture
-* React routing
-* Backend APIs (FastAPI)
-* Database integration (MySQL)
-* Authentication
-* Deployment
-* GitHub management
+During the integration of the React client with the FastAPI server and the Aiven MySQL database, several challenges were addressed:
 
-### Your Part (Co-Founder & UI/UX Engineer)
-* UI implementation
-* Responsive design
-* Reusable React components
-* Forms and validations
-* Dashboard cards
-* Testing and bug fixing
-* Documentation and README
+### 1. Cross-Origin Resource Sharing (CORS) Restrictions
+*   **Challenge:** The frontend, hosted on Vercel or localhost, was blocked by the browser when making API requests to the backend.
+*   **Solution:** Configured FastAPI's `CORSMiddleware` in `app/main.py` to allow traffic from authorized origins, including localhost ports and production Vercel domains, with headers and cookie authorization enabled.
 
-We'll review each other's code before merging it so both of us understand the entire project.
+### 2. Aiven MySQL SSL Handshake Requirements
+*   **Challenge:** Connecting to the hosted Aiven MySQL database failed in the production container due to SSL enforcement requirements.
+*   **Solution:** Extended `app/core/database.py` to intercept connection requests targeting `aivencloud.com` and dynamically attach SQLAlchemy's `connect_args={"ssl": {}}` parameters. Additionally, wrote custom sanitization in `app/core/config.py` to strip out incompatible connection query parameters before instantiating the engine.
 
----
+### 3. JWT Stateless Token Propagation
+*   **Challenge:** Attaching authorization headers manually to every individual Axios request was error-prone and caused code duplication.
+*   **Solution:** Implemented **Axios Interceptors** in the frontend client configuration. It intercepts every outgoing request, inspects `localStorage` for a valid JWT, and dynamically appends it under `Authorization: Bearer <TOKEN>`.
 
-# Goal
-
-We don't want this to look like a college assignment. We want it to feel like a real product that a family could actually use. Along the way, we'll learn React, TypeScript, Tailwind CSS, FastAPI, REST APIs, MySQL, authentication, CRUD operations, and deployment—all the core skills expected from a full-stack developer.
+### 4. Non-Blocking Database Startup
+*   **Challenge:** If the database took too long to respond on startup, the entire backend uvicorn worker hung and crashed, resulting in Render deployment timeouts.
+*   **Solution:** Wrapped the database table creation sequence (`Base.metadata.create_all`) in a startup `try-except` block to allow the FastAPI server to boot and respond to health checks independently of database availability.
