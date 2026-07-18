@@ -14,12 +14,12 @@ router = APIRouter(prefix="/family", tags=["Family Directory"])
 @router.get("")
 def read_family_members(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = family_service.get_family_members(db, current_user.id)
-    return {"success": True, "data": jsonable_encoder(items)}
+    return {"success": True, "data": [FamilyMemberResponse.model_validate(item).model_dump(mode="json") for item in items]}
 
 @router.post("")
 def create_member(member: FamilyMemberCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     new_item = family_service.create_family_member(db, current_user.id, member)
-    return {"success": True, "data": jsonable_encoder(new_item)}
+    return {"success": True, "data": FamilyMemberResponse.model_validate(new_item).model_dump(mode="json")}
 
 @router.delete("/{member_id}")
 def delete_member(member_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:

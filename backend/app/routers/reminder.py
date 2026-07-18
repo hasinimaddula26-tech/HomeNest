@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import Any
 from app.core.database import get_db
-from app.schemas.reminder import ReminderCreate, ReminderUpdate
+from app.schemas.reminder import ReminderCreate, ReminderUpdate, ReminderResponse
 from app.services import reminder as reminder_service
 
 from app.core.security import get_current_user
@@ -15,12 +15,12 @@ router = APIRouter(prefix="/reminders", tags=["Reminders"])
 @router.get("")
 def read_reminders(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = reminder_service.get_all_reminders(db, current_user.id)
-    return {"success": True, "data": jsonable_encoder(items)}
+    return {"success": True, "data": [ReminderResponse.model_validate(item).model_dump(mode="json") for item in items]}
 
 @router.post("")
 def create_reminder_item(reminder: ReminderCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     new_item = reminder_service.create_reminder(db, current_user.id, reminder)
-    return {"success": True, "data": jsonable_encoder(new_item)}
+    return {"success": True, "data": ReminderResponse.model_validate(new_item).model_dump(mode="json")}
 
 @router.put("/{reminder_id}")
 def update_reminder_item(reminder_id: int, reminder_update: ReminderUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
@@ -31,7 +31,7 @@ def update_reminder_item(reminder_id: int, reminder_update: ReminderUpdate, db: 
             content={"success": False, "message": "Reminder not found"}
         )
     updated_item = reminder_service.update_reminder(db, db_reminder, reminder_update)
-    return {"success": True, "data": jsonable_encoder(updated_item)}
+    return {"success": True, "data": ReminderResponse.model_validate(updated_item).model_dump(mode="json")}
 
 @router.delete("/{reminder_id}")
 def delete_reminder_item(reminder_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:

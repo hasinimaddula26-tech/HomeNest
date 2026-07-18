@@ -15,12 +15,12 @@ router = APIRouter(prefix="/groceries", tags=["Groceries"])
 @router.get("")
 def read_groceries(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = grocery_service.get_all_groceries(db, current_user.id)
-    return {"success": True, "data": jsonable_encoder(items)}
+    return {"success": True, "data": [GroceryResponse.model_validate(item).model_dump(mode="json") for item in items]}
 
 @router.post("")
 def create_grocery_item(grocery: GroceryCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     new_item = grocery_service.create_grocery(db, current_user.id, grocery)
-    return {"success": True, "data": jsonable_encoder(new_item)}
+    return {"success": True, "data": GroceryResponse.model_validate(new_item).model_dump(mode="json")}
 
 @router.put("/{grocery_id}")
 def update_grocery_item(grocery_id: int, grocery_update: GroceryUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
@@ -31,7 +31,7 @@ def update_grocery_item(grocery_id: int, grocery_update: GroceryUpdate, db: Sess
             content={"success": False, "message": "Grocery item not found"}
         )
     updated_item = grocery_service.update_grocery(db, db_grocery, grocery_update)
-    return {"success": True, "data": jsonable_encoder(updated_item)}
+    return {"success": True, "data": GroceryResponse.model_validate(updated_item).model_dump(mode="json")}
 
 @router.delete("/{grocery_id}")
 def delete_grocery_item(grocery_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:

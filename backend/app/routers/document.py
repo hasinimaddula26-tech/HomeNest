@@ -4,6 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from typing import Any
 import os
+from app.schemas.document import DocumentResponse
 from app.core.database import get_db
 from app.services import document as document_service
 from app.core.security import get_current_user
@@ -30,12 +31,12 @@ async def upload_document(
         file_content=content,
         category=category
     )
-    return {"success": True, "data": jsonable_encoder(doc)}
+    return {"success": True, "data": DocumentResponse.model_validate(doc).model_dump(mode="json")}
 
 @router.get("")
 def read_documents(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
     items = document_service.get_user_documents(db, current_user.id)
-    return {"success": True, "data": jsonable_encoder(items)}
+    return {"success": True, "data": [DocumentResponse.model_validate(item).model_dump(mode="json") for item in items]}
 
 @router.get("/{doc_id}/file")
 def get_file(doc_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
